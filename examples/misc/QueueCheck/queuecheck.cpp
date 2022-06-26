@@ -83,20 +83,20 @@ int main()
 	char val;
 
 	out << "New empty queue" << endl;
-	assert(out, "size()", BUFFER_SIZE - 1, queue.size());
-	assert(out, queue, true, false, 0, BUFFER_SIZE - 1);
+	assert(out, "size()", BUFFER_SIZE, queue.size());
+	assert(out, queue, true, false, 0, BUFFER_SIZE);
 	assert(out, "peek(c)", false, queue.peek(val));
-	assert(out, queue, true, false, 0, BUFFER_SIZE - 1);
+	assert(out, queue, true, false, 0, BUFFER_SIZE);
 
 	out << "Push 1 char" << endl;
 	queue.push('a');
-	assert(out, queue, false, false, 1, BUFFER_SIZE - 2);
+	assert(out, queue, false, false, 1, BUFFER_SIZE - 1);
 
 	out << "Pull 1 char" << endl;
 	assert(out, "pull()", true, queue.pull(val));
-	assert(out, queue, true, false, 0, BUFFER_SIZE - 1);
+	assert(out, queue, true, false, 0, BUFFER_SIZE);
 
-	out << "Push 9 chars" << endl;
+	out << "Push 10 chars" << endl;
 	queue.push('1');
 	queue.push('2');
 	queue.push('3');
@@ -106,27 +106,28 @@ int main()
 	queue.push('7');
 	queue.push('8');
 	queue.push('9');
-	assert(out, queue, false, true, BUFFER_SIZE - 1, 0);
+	queue.push('A');
+	assert(out, queue, false, true, BUFFER_SIZE, 0);
 
 	out << "Peek functions" << endl;
 	assert(out, "peek(c)", true, queue.peek(val));
 	assert(out, "peeked c", '1', val);
-	assert(out, queue, false, true, BUFFER_SIZE - 1, 0);
+	assert(out, queue, false, true, BUFFER_SIZE, 0);
 	assert(out, "peek(c)", true, queue.peek(val));
 	assert(out, "peeked c", '1', val);
-	assert(out, queue, false, true, BUFFER_SIZE - 1, 0);
+	assert(out, queue, false, true, BUFFER_SIZE, 0);
 
 	assert(out, "peek(buf[5])", 5, queue.peek(peek_buffer5));
-	assert(out, queue, false, true, BUFFER_SIZE - 1, 0);
+	assert(out, queue, false, true, BUFFER_SIZE, 0);
 
-	assert(out, "peek(buf[15])", 9, queue.peek(peek_buffer15));
-	assert(out, "peeked buf[15] Vs \"123456789\"", 0, strcmp(peek_buffer15, "123456789"));
-	assert(out, queue, false, true, BUFFER_SIZE - 1, 0);
+	assert(out, "peek(buf[15])", 10, queue.peek(peek_buffer15));
+	assert(out, "peeked buf[15] Vs \"123456789A\"", 0, strcmp(peek_buffer15, "123456789A"));
+	assert(out, queue, false, true, BUFFER_SIZE, 0);
 
 	assert(out, "peek(buf, 5)", 5, queue.peek(peek_buffer20, 5));
 	assert(out, "peeked buf Vs \"12345\"", 0, strcmp(peek_buffer20, "12345"));
 	out << "peek_buffer20 = '" << peek_buffer20 << "'" << endl;
-	assert(out, queue, false, true, BUFFER_SIZE - 1, 0);
+	assert(out, queue, false, true, BUFFER_SIZE, 0);
 
 	out << "Pull 8 chars" << endl;
 	assert(out, "pull() 1", true, queue.pull(val));
@@ -137,15 +138,16 @@ int main()
 	assert(out, "pull() 6", true, queue.pull(val));
 	assert(out, "pull() 7", true, queue.pull(val));
 	assert(out, "pull() 8", true, queue.pull(val));
-	assert(out, queue, false, false, 1, BUFFER_SIZE - 2);
+	assert(out, "pull() 9", true, queue.pull(val));
+	assert(out, queue, false, false, 1, BUFFER_SIZE - 1);
 
 	out << "Pull last char" << endl;
-	assert(out, "pull() 9", true, queue.pull(val));
-	assert(out, queue, true, false, 0, BUFFER_SIZE - 1);
+	assert(out, "pull() A", true, queue.pull(val));
+	assert(out, queue, true, false, 0, BUFFER_SIZE);
 
 	out << "Pull no char" << endl;
 	assert(out, "pull()", false, queue.pull(val));
-	assert(out, queue, true, false, 0, BUFFER_SIZE - 1);
+	assert(out, queue, true, false, 0, BUFFER_SIZE);
 
 	return 0;
 }

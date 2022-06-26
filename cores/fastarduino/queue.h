@@ -76,7 +76,7 @@ namespace containers
 		 * @param locked when `true`, prevents pushing any data to this queue
 		 */
 		template<uint8_t SIZE> explicit Queue(T (&buffer)[SIZE], bool locked = false)
-		: buffer_{buffer}, size_{SIZE}, locked_{locked} {}
+		: buffer_{buffer}, size_{SIZE + 1}, locked_{locked} {}
 
 		/**
 		 * Lock this queue, ie prevent pushing any data to it.
